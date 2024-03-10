@@ -1,4 +1,4 @@
-package com.contactmanager.entities;
+package com.contactmanager.entity;
 
 import java.util.ArrayList;
 import java.util.List;
