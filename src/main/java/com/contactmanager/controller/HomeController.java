@@ -53,9 +53,11 @@ public class HomeController {
 			System.out.println(user.toString());
 			System.out.println(agreement);
 			
+			model.addAttribute("title", "Sign Up | Contact Manager");
+			
 			if(!agreement)
 			{
-				model.addAttribute("agreementappend", "text-danger");
+				session.setAttribute("agreementappend", "text-danger");
 				session.setAttribute("message", new Message("*Please accept Terms & Conditions", "text-dark fw-bold"));
 				return "redirect:/signup";
 			}
@@ -67,17 +69,15 @@ public class HomeController {
 			
 			userServiceImplementation.register(user);
 			
-			model.addAttribute("title", "Sign Up | Contact Manager");
-			model.addAttribute("signupappend", "active");
-			model.addAttribute("user", new User());
+			session.setAttribute("user", new User());
 			session.setAttribute("message", new Message("Registration Successful!!", "text-success fw-bold"));
-			return "signup";
+			return "redirect:/signup";
 		}
 		catch(Exception e)
 		{
-			model.addAttribute("user", user);
+			session.setAttribute("user", user);
 			session.setAttribute("message", new Message("Something went wrong!! Please try again..", "text-dark fw-bold"));
-			return "signup";
+			return "redirect:/signup";
 		}
 	}
 	

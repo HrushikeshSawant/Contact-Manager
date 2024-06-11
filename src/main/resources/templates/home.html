@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<html lang="en" data-th-replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="UTF-8" />
 <title>Home Page</title>
@@ -14,7 +14,7 @@
 			<span>Contact Manager will be best solution for you..</span>
 			<br /><br />
 			<div class="text-center">
-				<a th:href="@{/signup}">
+				<a data-th-href="@{/signup}">
 					<button class="btn bg-primary">Let's Get Started</button>
 				</a>
 			</div>

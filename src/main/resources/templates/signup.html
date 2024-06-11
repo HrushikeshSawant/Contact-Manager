@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
+<html lang="en" data-th-replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="UTF-8" />
 <title>SignUp Page</title>
@@ -17,19 +17,19 @@
 			
 				<div class="form">
 				
-					<form th:action="@{/register}" method="post" th:object="${user}">
+					<form data-th-action="@{/register}" method="post" data-th-object="${user}">
 					
 					<!-- Name Field -->
 					<div class="mb-3">
 					    <label for="name" class="form-label">Name</label>
-					    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" th:value="${user.name}" required>
+					    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" data-th-value="${user.name}">
 					    <div id="nameHelp" class="form-text">We'll never share your name with anyone else.</div>
 				  	</div>
 				  	
 				  	<!-- Email Field -->
 					<div class="mb-3">
 					    <label for="email" class="form-label">Email</label>
-					    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" th:value="${user.email}" required>
+					    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" data-th-value="${user.email}">
 					    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
 				  	</div>
 				  	
@@ -41,19 +41,19 @@
 				  	
 				  	<!-- About Field -->
 					<div class="mb-3">
-					    <textarea placeholder="Enter something.." rows="6" class="form-control" id="about" name="about" th:value="${user.about}"></textarea>
+					    <textarea placeholder="Enter something.." rows="6" class="form-control" id="about" name="about" data-th-value="${user.about}"></textarea>
 				  	</div>
 				  	
 				  	<!-- Terms & Conditions -->
 				  	<div class="mb-3 form-check">
 					    <input type="checkbox" class="form-check-input" id="agreement" name="agreement">
-					    <label class="form-check-label" for="agreement" th:classappend="${agreementappend}">Terms & Conditions</label>
+					    <label class="form-check-label" for="agreement" data-th-classappend="${session.agreementappend}">Terms & Conditions</label>
 				  	</div>
 				  	
 				  	<!-- Global Message -->
-				  	<div class="global-message" th:if="${session.message}" th:classappend="${session.message.type}">
-				  		<p th:text="${session.message.content}"></p>
-				  		<th:block th:text="${#session.removeAttribute('message')}"></th:block>
+				  	<div class="global-message" data-th-if="${session.message != null}" data-th-classappend="${session.message.type}">
+				  		<p data-th-text="${session.message.content}"></p>
+				  		<data-th-block data-th-text="${@sessionHelper.removeVerificationMessageFromSession()}"></data-th-block>
 				  	</div>
 				  	
 				  	<div class="btn-container text-center">
