@@ -12,49 +12,72 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "USER")
+@Table(name = "users")
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int id;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int userId;
+	@Column(nullable = false)
 	private String name;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String email;
 	private String password;
-	private String imageUrl;
+	@Transient
+	private String confirmPassword;
+	private String profilePic;
+	private String phone;
 	private String role;
-	private boolean status;
-	@Column(length = 500)
-	private String about;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	// TO VERIFY USER EMAIL AND NUMBER
+	private boolean status = false;
+	private boolean emailVerified = false;
+	private boolean numberVerified = false;
+
+	// TO MANAGE FROM WHICH USER HAS SIGNED UP. DEFAULT=SELF
+	private Providers provider = Providers.SELF;
+	private String providerUserId;
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Contact> contacts = new ArrayList<>();
+
+	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Email> sentEmail = new ArrayList<>();
 
 	public User() {
 		super();
 	}
 
-	public User(int id, String name, String email, String password, String imageUrl, String role, boolean status, String about) {
+	public User(int userId, String name, String email, String password, String confirmPassword, String profilePic,
+			String phone, String role, boolean status, boolean emailVerified, boolean numberVerified,
+			Providers provider, String providerUserId, List<Contact> contacts, List<Email> sentEmail) {
 		super();
-		this.id = id;
+		this.userId = userId;
 		this.name = name;
 		this.email = email;
 		this.password = password;
-		this.imageUrl = imageUrl;
+		this.confirmPassword = confirmPassword;
+		this.profilePic = profilePic;
+		this.phone = phone;
 		this.role = role;
 		this.status = status;
-		this.about = about;
+		this.emailVerified = emailVerified;
+		this.numberVerified = numberVerified;
+		this.provider = provider;
+		this.providerUserId = providerUserId;
+		this.contacts = contacts;
+		this.sentEmail = sentEmail;
 	}
 
-	public int getId() {
-		return id;
+	public int getUserId() {
+		return userId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 	public String getName() {
@@ -81,12 +104,28 @@ public class User {
 		this.password = password;
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public String getConfirmPassword() {
+		return confirmPassword;
 	}
 
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getRole() {
@@ -105,12 +144,36 @@ public class User {
 		this.status = status;
 	}
 
-	public String getAbout() {
-		return about;
+	public boolean isEmailVerified() {
+		return emailVerified;
 	}
 
-	public void setAbout(String about) {
-		this.about = about;
+	public void setEmailVerified(boolean emailVerified) {
+		this.emailVerified = emailVerified;
+	}
+
+	public boolean isNumberVerified() {
+		return numberVerified;
+	}
+
+	public void setNumberVerified(boolean numberVerified) {
+		this.numberVerified = numberVerified;
+	}
+
+	public Providers getProvider() {
+		return provider;
+	}
+
+	public void setProvider(Providers provider) {
+		this.provider = provider;
+	}
+
+	public String getProviderUserId() {
+		return providerUserId;
+	}
+
+	public void setProviderUserId(String providerUserId) {
+		this.providerUserId = providerUserId;
 	}
 
 	public List<Contact> getContacts() {
@@ -121,13 +184,21 @@ public class User {
 		this.contacts = contacts;
 	}
 
+	public List<Email> getSentEmail() {
+		return sentEmail;
+	}
+
+	public void setSentEmail(List<Email> sentEmail) {
+		this.sentEmail = sentEmail;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + ", password=" + password + ", imageUrl="
-				+ imageUrl + ", role=" + role + ", status=" + status + ", about=" + about + ", contacts=" + contacts
-				+ "]";
+		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
+				+ ", confirmPassword=" + confirmPassword + ", profilePic=" + profilePic + ", phone=" + phone + ", role="
+				+ role + ", status=" + status + ", emailVerified=" + emailVerified + ", numberVerified="
+				+ numberVerified + ", provider=" + provider + ", providerUserId=" + providerUserId + ", contacts="
+				+ contacts + ", sentEmail=" + sentEmail + "]";
 	}
-	
-	
 
 }

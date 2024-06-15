@@ -12,30 +12,7 @@
 
 	<!-- NAVBAR START -->
 
-	<nav class="navbar navbar-expand-lg bg-body-tertiary">
-	  	<div class="container-fluid">
-	    	<a class="navbar-brand" data-th-href="@{/}">Contact Manager</a>
-	    	<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-	      		<span class="navbar-toggler-icon"></span>
-	    	</button>
-		    <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
-	      		<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-			        <li class="nav-item">
-			         	<a class="nav-link" aria-current="page" data-th-href="@{/}" data-th-classappend="${homeappend}">Home</a>
-			        </li>
-			        <li class="nav-item">
-			          	<a class="nav-link" href="#" data-th-classappend="${aboutappend}">About</a>
-			        </li>
-			        <li class="nav-item">
-			          	<a class="nav-link" href="#" data-th-classappend="${loginappend}">Login</a>
-			        </li>
-			        <li class="nav-item">
-			          	<a class="nav-link" data-th-href="@{/signup}" data-th-classappend="${signupappend}">Sign Up</a>
-			        </li>
-	      		</ul>
-		    </div>
-	  </div>
-	</nav>
+	<div data-th-replace="navbar :: navbar"></div>
 
 	<!-- NAVBAR END -->
 
@@ -43,7 +20,7 @@
 
 	<!-- FOOTER START -->
 
-	<footer class="mt-5 card-body bg-body-tertiary">This is footer from base template</footer>
+	<div data-th-replace="footer :: footer"></div>
 
 	<!-- FOOTER END -->
 

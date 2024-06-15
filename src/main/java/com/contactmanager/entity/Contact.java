@@ -1,6 +1,5 @@
 package com.contactmanager.entity;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -13,16 +12,14 @@ import jakarta.persistence.Table;
 public class Contact {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private int cId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private int id;
 	private String name;
 	private String email;
-	private String nickname;
 	private String contactImage;
 	private String phone;
+	private boolean isFavourite = false;
 	private String work;
-	@Column(length = 1000)
-	private String description;
 
 	@ManyToOne
 	private User user;
@@ -31,25 +28,25 @@ public class Contact {
 		super();
 	}
 
-	public Contact(int cId, String name, String email, String nickname, String contactImage, String phone, String work,
-			String description) {
+	public Contact(int id, String name, String email, String contactImage, String phone, boolean isFavourite,
+			String work, User user) {
 		super();
-		this.cId = cId;
+		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.nickname = nickname;
 		this.contactImage = contactImage;
 		this.phone = phone;
+		this.isFavourite = isFavourite;
 		this.work = work;
-		this.description = description;
+		this.user = user;
 	}
 
-	public int getcId() {
-		return cId;
+	public int getId() {
+		return id;
 	}
 
-	public void setcId(int cId) {
-		this.cId = cId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getName() {
@@ -68,14 +65,6 @@ public class Contact {
 		this.email = email;
 	}
 
-	public String getNickname() {
-		return nickname;
-	}
-
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
-	}
-
 	public String getContactImage() {
 		return contactImage;
 	}
@@ -92,20 +81,20 @@ public class Contact {
 		this.phone = phone;
 	}
 
+	public boolean isFavourite() {
+		return isFavourite;
+	}
+
+	public void setFavourite(boolean isFavourite) {
+		this.isFavourite = isFavourite;
+	}
+
 	public String getWork() {
 		return work;
 	}
 
 	public void setWork(String work) {
 		this.work = work;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public User getUser() {
