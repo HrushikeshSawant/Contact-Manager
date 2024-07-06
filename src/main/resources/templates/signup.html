@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-th-replace="~{base::layout(~{::section})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{base::layout(~{::section})}">
 <head>
 <meta charset="UTF-8" />
 <title>SignUp Page</title>
@@ -8,8 +8,7 @@
 
 	<section>
 		<div class="container">
-		
-		<div class="my-form mt-2">
+			<div class="my-form mt-3">
 		
 			<div class="col-md-6 offset-md-3">
 		
@@ -17,45 +16,47 @@
 			
 				<div class="form">
 				
-					<form data-th-action="@{/register}" method="post" data-th-object="${user}">
+					<form data-th-action="@{/register}" method="post" th:object="${userForm}">
 					
 					<!-- Name Field -->
 					<div class="mb-3">
 					    <label for="name" class="form-label">Name</label>
-					    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" data-th-value="${user.name}">
-					    <div id="nameHelp" class="form-text">We'll never share your name with anyone else.</div>
+					    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp">
+					    <div id="nameHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('name')}" data-th-text="${e}">We'll never share your email with anyone else.</div>					    
 				  	</div>
 				  	
 				  	<!-- Email Field -->
 					<div class="mb-3">
 					    <label for="email" class="form-label">Email</label>
-					    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" data-th-value="${user.email}">
-					    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+					    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+					    <div id="emailHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('email')}" data-th-text="${e}">We'll never share your email with anyone else.</div>
 				  	</div>
 				  	
 				  	<!-- Password Field -->
 				  	<div class="mb-3">
 					    <label for="password" class="form-label">Password</label>
 					    <input type="password" class="form-control" id="password" name="password">
+					    <div id="passwordHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('password')}" data-th-text="${e}">We'll never share your email with anyone else.</div>
 				  	</div>
 				  	
-				  	<!-- About Field -->
-					<div class="mb-3">
-					    <textarea placeholder="Enter something.." rows="6" class="form-control" id="about" name="about" data-th-value="${user.about}"></textarea>
-				  	</div>
-				  	
-				  	<!-- Terms & Conditions -->
-				  	<div class="mb-3 form-check">
-					    <input type="checkbox" class="form-check-input" id="agreement" name="agreement">
-					    <label class="form-check-label" for="agreement" data-th-classappend="${session.agreementappend}">Terms & Conditions</label>
+				  	<!-- Confirm Password Field -->
+				  	<div class="mb-3">
+					    <label for="confirmPassword" class="form-label">Confirm Password</label>
+					    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+					    <div id="confirmPasswordHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('confirmPassword')}" data-th-text="${e}">We'll never share your email with anyone else.</div>
 				  	</div>
 				  	
 				  	<!-- Global Message -->
 				  	<div class="global-message" data-th-if="${session.message != null}" data-th-classappend="${session.message.type}">
 				  		<p data-th-text="${session.message.content}"></p>
+				  		<!-- <div class="card border-success mb-3" style="max-width: 18rem;">
+						  <div class="card-body text-success">
+						    <h5 class="card-title" data-th-text="${session.message.content}">Success card title</h5>
+						  </div>
+						</div> -->
 				  		<data-th-block data-th-text="${@sessionHelper.removeVerificationMessageFromSession()}"></data-th-block>
 				  	</div>
-				  	
+				  					  	
 				  	<div class="btn-container text-center">
 					  	<button type="submit" class="btn btn-primary">Submit</button>
 					  	<button type="reset" class="btn btn-secondary">Reset</button>				  	
@@ -68,7 +69,7 @@
 			</div>
 		
 		</div>
-		
+
 		</div>
 	</section>
 

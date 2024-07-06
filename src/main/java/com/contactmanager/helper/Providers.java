@@ -1,4 +1,4 @@
-package com.contactmanager.entity;
+package com.contactmanager.helper;
 
 public enum Providers {
 

@@ -3,22 +3,23 @@ package com.contactmanager.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.contactmanager.entity.User;
 import com.contactmanager.helper.Message;
-import com.contactmanager.serviceImplementation.UserServiceImplementation;
+import com.contactmanager.helper.UserForm;
+import com.contactmanager.service.UserService;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class HomeController {
 	
 	@Autowired
-	UserServiceImplementation userServiceImplementation;
+	UserService userService;
 
 	@GetMapping("/")
 	public String home(Model model)
@@ -36,7 +37,7 @@ public class HomeController {
 	}
 	
 	@GetMapping("/signup")
-	public String signup(Model model)
+	public String signup(UserForm userForm, Model model)
 	{
 		model.addAttribute("title", "Sign Up | Contact Manager");
 		model.addAttribute("signupappend", "active");
@@ -46,38 +47,38 @@ public class HomeController {
 	
 	
 	@PostMapping("/register")
-	public String register(@ModelAttribute("user") User user, @RequestParam(value = "agreement", defaultValue = "false") Boolean agreement, Model model, HttpSession session)
+	public String register(@Valid UserForm userForm, BindingResult result, HttpSession session)
 	{
 		try
 		{
-			System.out.println(user.toString());
-			System.out.println(agreement);
-			
-			model.addAttribute("title", "Sign Up | Contact Manager");
-			
-			if(!agreement)
+			System.out.println(userForm.toString());
+			System.out.println(result.hasErrors());
+			if(result.hasErrors())
 			{
-				session.setAttribute("agreementappend", "text-danger");
-				session.setAttribute("message", new Message("*Please accept Terms & Conditions", "text-dark fw-bold"));
-				return "redirect:/signup";
+				System.out.println(result.getAllErrors().toString());
+				return "signup";
 			}
 			
-			user.setRole("ROLE_USER");
-			user.setStatus(true);
-			
+			User user = new User();
+			user.setName(userForm.getName());
+			user.setEmail(userForm.getEmail());
+			user.setPassword(userForm.getPassword());
+			user.setProfilePic("/image/default_pic.jpg");
+
 			//BECRYPT PASSWORD ENCODER USED TO ENCRYPT PASSWORD
 			
-			userServiceImplementation.register(user);
+			userService.registerUser(user);
+			System.out.println("User saved");
 			
-			session.setAttribute("user", new User());
+//			session.setAttribute("user", new User());
 			session.setAttribute("message", new Message("Registration Successful!!", "text-success fw-bold"));
-			return "redirect:/signup";
+			return "redirect:signup";
 		}
 		catch(Exception e)
 		{
-			session.setAttribute("user", user);
+			session.setAttribute("user", userForm);
 			session.setAttribute("message", new Message("Something went wrong!! Please try again..", "text-dark fw-bold"));
-			return "redirect:/signup";
+			return "redirect:signup";
 		}
 	}
 	

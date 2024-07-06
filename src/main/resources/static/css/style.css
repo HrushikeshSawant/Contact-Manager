@@ -28,8 +28,9 @@ body{
 }
 
 .my-form{
-	padding: 10px;
+	padding: 30px;
 	background: white;
+	border-radius: 5px;
 }
 
 .form-header{
