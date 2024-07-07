@@ -1,16 +1,14 @@
 package com.contactmanager.configuration;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+
+import com.contactmanager.serviceImplementation.UserDetailsServiceImplementationSecurity;
 
 //SPRING SECURITY CONFIGURATION
 //WHATEVER WE ARE CONFIGURING IN SPRING SECURITY WE WILL CONFIGURE IT HAS BEAN
@@ -40,6 +38,7 @@ public class SecurityConfiguration {
 	
 	*/
 	
+	/*
 	//CREATING USER AND PERFORMING LOGIN USING IN-MEMORY SERVICE
 	@Bean
 	UserDetailsService userDetailsService() {
@@ -57,7 +56,38 @@ public class SecurityConfiguration {
 	PasswordEncoder getPasswordEncoder() {
 		return NoOpPasswordEncoder.getInstance();
 	}
+	*/
 	
+	/*
+	 IN BELOW CODE WILL RETURN daoAuthenticationProvider OBJECT BY SETTING UP UserDetailsService and AuthenticationManager
+	  SO WHENEVER LOGIN REQUEST COMES, AT FIRST USER WILL BE LOADED FROM UserDetailsService. IT WILL LOADS THE CRETAED UserDetailsService WHICH IS 'UserDetailsServiceImplementationSecurity'.
+	  THEN IT WILL LOADS THE USER FROM DATABASE IF PRESENT, OR ELSE IT WILL THROW AN EXCEPTION.
+	  THEN AUTHENTICATION WILL  HAPPEN. IT WILL MATCH THE DATABASE PASSWORD AND ENTERED PASSWORD.
+	*/
 	
+	@Autowired
+	private UserDetailsServiceImplementationSecurity userDetailsServiceImplementationSecurity;
+	
+	@Bean
+	AuthenticationProvider authenticationProvider() {
+		
+		DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
+		
+		//DaoAuthenticationProvider HAS ALL METHODS USING WHICH WE CAN REGISTER THE SERVICE
+		
+		//PASSING OBJECT OF USER DETAILS SERVICE
+		daoAuthenticationProvider.setUserDetailsService(userDetailsServiceImplementationSecurity);
+		
+		//PASSING OBJECT OF PASSWORD ENCODER
+		daoAuthenticationProvider.setPasswordEncoder(passwordEncoder());
+		
+		return daoAuthenticationProvider;
+		
+	}
+	
+	@Bean
+	PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 	
 }

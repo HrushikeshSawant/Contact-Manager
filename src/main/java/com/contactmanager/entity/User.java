@@ -1,12 +1,19 @@
 package com.contactmanager.entity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.contactmanager.helper.Providers;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -16,11 +23,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,7 +41,7 @@ public class User {
 	private String role;
 
 	// TO VERIFY USER EMAIL AND NUMBER
-	private boolean status = false;
+	private boolean enabled = true;
 	private boolean emailVerified = false;
 	private boolean phoneVerified = false;
 
@@ -49,13 +55,16 @@ public class User {
 
 	@OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Email> sentEmail = new ArrayList<>();
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	private List<String> roleList = new ArrayList<>();
 
 	public User() {
 		super();
 	}
 
 	public User(int userId, String name, String email, String password, String profilePic,
-			String phone, String role, boolean status, boolean emailVerified, boolean phoneVerified,
+			String phone, String role, boolean enabled, boolean emailVerified, boolean phoneVerified,
 			Providers provider, String providerUserId, List<Contact> contacts, List<Email> sentEmail) {
 		super();
 		this.userId = userId;
@@ -65,13 +74,29 @@ public class User {
 		this.profilePic = profilePic;
 		this.phone = phone;
 		this.role = role;
-		this.status = status;
+		this.enabled = enabled;
 		this.emailVerified = emailVerified;
 		this.phoneVerified = phoneVerified;
 		this.provider = provider;
 		this.providerUserId = providerUserId;
 		this.contacts = contacts;
 		this.sentEmail = sentEmail;
+	}
+
+	public boolean isPhoneVerified() {
+		return phoneVerified;
+	}
+
+	public void setPhoneVerified(boolean phoneVerified) {
+		this.phoneVerified = phoneVerified;
+	}
+
+	public List<String> getRoleList() {
+		return roleList;
+	}
+
+	public void setRoleList(List<String> roleList) {
+		this.roleList = roleList;
 	}
 
 	public int getUserId() {
@@ -130,12 +155,12 @@ public class User {
 		this.role = role;
 	}
 
-	public boolean isStatus() {
-		return status;
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void setStatus(boolean status) {
-		this.status = status;
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 	public boolean isEmailVerified() {
@@ -190,9 +215,38 @@ public class User {
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
 				+ ", profilePic=" + profilePic + ", phone=" + phone + ", role="
-				+ role + ", status=" + status + ", emailVerified=" + emailVerified + ", phoneVerified="
+				+ role + ", enabled=" + enabled + ", emailVerified=" + emailVerified + ", phoneVerified="
 				+ phoneVerified + ", provider=" + provider + ", providerUserId=" + providerUserId + ", contacts="
 				+ contacts + ", sentEmail=" + sentEmail + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+
+		//CONVERTING LIST OF ROLES [USER, ADMIN] TO LIST OF SimpleGrantedAuthority [roles(USER, ADMIN}]
+		
+		List<SimpleGrantedAuthority> roles = roleList.stream().map(role -> new SimpleGrantedAuthority(role)).collect(Collectors.toList());
+		return roles;
+	}
+
+	@Override
+	public String getUsername() {
+		return email;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
 	}
 
 }

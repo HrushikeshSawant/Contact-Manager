@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.contactmanager.entity.User;
 import com.contactmanager.exception.ResourceNotFoundException;
+import com.contactmanager.helper.ApplicationConstants;
 import com.contactmanager.repository.UserRepository;
 import com.contactmanager.service.UserService;
 
@@ -18,12 +20,19 @@ public class UserServiceImplementation implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	private Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public User registerUser(User user) {
 		log.debug(user.toString());
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setRoleList(List.of(ApplicationConstants.ROLE_USER));
+		
 		return userRepository.save(user);
 	}
 
@@ -49,7 +58,7 @@ public class UserServiceImplementation implements UserService {
 		fetchedUser.setProfilePic(user.getProfilePic());
 		fetchedUser.setPhone(user.getPhone());
 		fetchedUser.setRole(user.getRole());
-		fetchedUser.setStatus(user.isStatus());
+		fetchedUser.setEnabled(user.isEnabled());
 		fetchedUser.setEmailVerified(user.isEmailVerified());
 		fetchedUser.setphoneVerified(user.isphoneVerified());
 		fetchedUser.setProvider(user.getProvider());
