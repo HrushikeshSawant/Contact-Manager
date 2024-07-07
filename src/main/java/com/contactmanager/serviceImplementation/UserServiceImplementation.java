@@ -57,7 +57,6 @@ public class UserServiceImplementation implements UserService {
 		fetchedUser.setPassword(user.getPassword());
 		fetchedUser.setProfilePic(user.getProfilePic());
 		fetchedUser.setPhone(user.getPhone());
-		fetchedUser.setRole(user.getRole());
 		fetchedUser.setEnabled(user.isEnabled());
 		fetchedUser.setEmailVerified(user.isEmailVerified());
 		fetchedUser.setphoneVerified(user.isphoneVerified());

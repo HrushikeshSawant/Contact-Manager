@@ -38,7 +38,6 @@ public class User implements UserDetails{
 	private String password;
 	private String profilePic;
 	private String phone;
-	private String role;
 
 	// TO VERIFY USER EMAIL AND NUMBER
 	private boolean enabled = true;
@@ -64,7 +63,7 @@ public class User implements UserDetails{
 	}
 
 	public User(int userId, String name, String email, String password, String profilePic,
-			String phone, String role, boolean enabled, boolean emailVerified, boolean phoneVerified,
+			String phone, boolean enabled, boolean emailVerified, boolean phoneVerified,
 			Providers provider, String providerUserId, List<Contact> contacts, List<Email> sentEmail) {
 		super();
 		this.userId = userId;
@@ -73,7 +72,6 @@ public class User implements UserDetails{
 		this.password = password;
 		this.profilePic = profilePic;
 		this.phone = phone;
-		this.role = role;
 		this.enabled = enabled;
 		this.emailVerified = emailVerified;
 		this.phoneVerified = phoneVerified;
@@ -147,14 +145,6 @@ public class User implements UserDetails{
 		this.phone = phone;
 	}
 
-	public String getRole() {
-		return role;
-	}
-
-	public void setRole(String role) {
-		this.role = role;
-	}
-
 	public boolean isEnabled() {
 		return enabled;
 	}
@@ -214,8 +204,7 @@ public class User implements UserDetails{
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", name=" + name + ", email=" + email + ", password=" + password
-				+ ", profilePic=" + profilePic + ", phone=" + phone + ", role="
-				+ role + ", enabled=" + enabled + ", emailVerified=" + emailVerified + ", phoneVerified="
+				+ ", profilePic=" + profilePic + ", phone=" + phone + ", enabled=" + enabled + ", emailVerified=" + emailVerified + ", phoneVerified="
 				+ phoneVerified + ", provider=" + provider + ", providerUserId=" + providerUserId + ", contacts="
 				+ contacts + ", sentEmail=" + sentEmail + "]";
 	}
