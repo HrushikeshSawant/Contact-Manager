@@ -14,6 +14,8 @@ public class SessionHelper {
 		try {
 			HttpSession session = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest().getSession();
 			session.removeAttribute("message");
+			session.removeAttribute("emailExists");
+			session.removeAttribute("wrongPassword");
 			session.removeAttribute("agreementappend");
 			session.removeAttribute("user");
 		}

@@ -1,5 +1,6 @@
 package com.contactmanager.helper;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -12,6 +13,7 @@ public class UserForm {
 	
 	@NotBlank(message = "Email is required.")
 	@Email(message = "Invalid email address.")
+	@Column(unique = true)
 	private String email;
 	
 	@NotBlank(message = "Password is required.")

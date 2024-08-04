@@ -16,7 +16,7 @@
 			
 				<div class="form">
 				
-					<form data-th-action="@{/register}" method="post" th:object="${userForm}">
+					<form data-th-action="@{/register}" method="post" data-th-object="${userForm}">
 					
 					<!-- Name Field -->
 					<div class="mb-3">
@@ -29,6 +29,10 @@
 					<div class="mb-3">
 					    <label for="email" class="form-label">Email</label>
 					    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+					    <div class="global-message" data-th-if="${session.emailExists != null}" data-th-classappend="${session.emailExists.type}">
+					  		<p data-th-text="${session.emailExists.content}"></p>
+					  		<data-th-block data-th-text="${@sessionHelper.removeVerificationMessageFromSession()}"></data-th-block>
+					  	</div>
 					    <div id="emailHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('email')}" data-th-text="${e}">We'll never share your email with anyone else.</div>
 				  	</div>
 				  	
@@ -43,6 +47,10 @@
 				  	<div class="mb-3">
 					    <label for="confirmPassword" class="form-label">Confirm Password</label>
 					    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
+					    <div class="global-message" data-th-if="${session.wrongPassword != null}" data-th-classappend="${session.wrongPassword.type}">
+					  		<p data-th-text="${session.wrongPassword.content}"></p>
+					  		<data-th-block data-th-text="${@sessionHelper.removeVerificationMessageFromSession()}"></data-th-block>
+					  	</div>
 					    <div id="confirmPasswordHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('confirmPassword')}" data-th-text="${e}">We'll never share your email with anyone else.</div>
 				  	</div>
 				  	

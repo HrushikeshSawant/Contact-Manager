@@ -5,8 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,6 +17,7 @@ import com.contactmanager.serviceImplementation.UserDetailsServiceImplementation
 //WHATEVER WE ARE CONFIGURING IN SPRING SECURITY WE WILL CONFIGURE IT HAS BEAN
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfiguration {
 
 	//SPRING SECURITY USES 'UserDetailsService'. SO WHENEVER WE PERFORM LOGIN IT USES 'UserDetailsService' TO FETCH USER.
@@ -94,12 +95,33 @@ public class SecurityConfiguration {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
 		//CONFIGURED URL'S WHICH NEEDS TO BE PUBLIC AND WHICH NEEDS TO BE PROTECTED
-		httpSecurity.authorizeHttpRequests(authorize -> {
+		httpSecurity.authorizeHttpRequests(authorize -> 
 			
-			authorize.requestMatchers("/user/**").authenticated();
-			authorize.anyRequest().permitAll();
-		})
-		.formLogin(Customizer.withDefaults());
+			authorize.requestMatchers("/user/**").authenticated()
+			.anyRequest().permitAll()
+		);
+		
+		//DAFAULT FORM LOGIN
+//		httpSecurity.formLogin(Customizer.withDefaults());
+		
+		//CUSTOMIZED FORM LOGIN
+		httpSecurity.formLogin(formLogin -> 
+			formLogin
+			.loginPage("/login")
+			.loginProcessingUrl("/do_login")
+			.defaultSuccessUrl("/user/dashboard")
+//			.successForwardUrl("/user/profile")
+//			.failureForwardUrl("/login?error=true")
+			.usernameParameter("email")
+			.passwordParameter("password")
+			.permitAll()
+		);
+		
+		httpSecurity.logout(logout -> 
+			logout.logoutUrl("/logout")
+			.logoutSuccessUrl("/login?logout=true")
+			.permitAll()
+		);
 		
 		return httpSecurity.build();
 	}

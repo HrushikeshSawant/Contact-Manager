@@ -53,10 +53,19 @@ public class HomeController {
 		{
 			System.out.println(userForm.toString());
 			System.out.println(result.hasErrors());
-			if(result.hasErrors())
-			{
+			if(result.hasErrors()){
 				System.out.println(result.getAllErrors().toString());
 				return "signup";
+			}
+			
+			if(userService.isUserExistsByEmail(userForm.getEmail())) {
+				session.setAttribute("emailExists", new Message("Email already exists!!", "form-text text-danger px-1"));
+				return "redirect:signup";
+			}
+			
+			if(!userForm.getPassword().equalsIgnoreCase(userForm.getConfirmPassword())) {
+				session.setAttribute("wrongPassword", new Message("Password & Confirm Password must be same!!", "form-text text-danger px-1"));
+				return "redirect:signup";
 			}
 			
 			User user = new User();
@@ -80,6 +89,12 @@ public class HomeController {
 			session.setAttribute("message", new Message("Something went wrong!! Please try again..", "text-dark fw-bold"));
 			return "redirect:signup";
 		}
+	}
+	
+	@GetMapping("/login")
+	public String login()
+	{
+		return "login";
 	}
 	
 }
