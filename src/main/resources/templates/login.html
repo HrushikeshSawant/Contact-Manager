@@ -18,23 +18,43 @@
 				
 					<div class="form">
 					
-						<form data-th-action="@{/do_login}" method="post">
+						<form data-th-action="@{/authenticate}" method="post">
 						
 							<!-- Email Field -->
 							<div class="mb-3">
-						    	<label for="email" class="form-label">Email</label>
-						    	<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
+						    	<label for="email" class="form-label">Email Address</label>
+						    	<input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email">
 						  	</div>
 						  	
 						  	<!-- Password Field -->
 						  	<div class="mb-3">
 						    	<label for="password" class="form-label">Password</label>
-						    	<input type="password" class="form-control" id="password" name="password">
+						    	<input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
 						  	</div>
 						  	
-						  	<div id="error" class="form-text mb-2">We'll never share your email with anyone else.</div>
+						  	<div id="error" class="form-text text-danger mb-2" data-th-if="${param.error}">
+								Invalid email and password.
+							</div>
+							<div id="success" class="form-text text-success mb-2" data-th-if="${param.logout}">
+								You have been logged out.
+							</div>
 						  	<button type="submit" class="btn btn-primary">Submit</button>
 						</form>
+						<div class="col-md-12">
+                            <div class="login-or">
+                               <hr class="hr-or">
+                               <span class="span-or">OR</span>
+                            </div>
+                        </div>
+						<div class="social-buttons-container d-flex justify-content-center mt-10">
+							<a class = "py-2 login-with-google-btn" data-th-href="@{/oauth2/authorization/google}">Login With Google</a>
+						</div>
+						<div class="social-buttons-container d-flex justify-content-center mt-10">
+							<a class = "py-2 login-with-github-btn mt-2" data-th-href="@{/oauth2/authorization/github}">Login With GitHub</a>
+						</div>
+						<div class="form">
+                        	<p class="text-center">Don't have account? <a data-th-href="@{/signup}" id="signup" class="text-decoration-none">Sign up here</a></p>
+                        </div>
 						
 					</div>
 				

@@ -11,7 +11,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.contactmanager.serviceImplementation.UserDetailsServiceImplementationSecurity;
+import com.contactmanager.service.implementation.UserDetailsServiceImplementationSecurity;
 
 //SPRING SECURITY CONFIGURATION
 //WHATEVER WE ARE CONFIGURING IN SPRING SECURITY WE WILL CONFIGURE IT HAS BEAN
@@ -72,6 +72,9 @@ public class SecurityConfiguration {
 	@Autowired
 	private UserDetailsServiceImplementationSecurity userDetailsServiceImplementationSecurity;
 	
+	@Autowired
+	private OAuthAuthenticationSuccessHandler oAuthAuthenticationSuccessHandler;
+	
 	
 	//CONFIGURATION OF AuthenticationProvider FOR SPRING SECURITY
 	@Bean
@@ -94,6 +97,8 @@ public class SecurityConfiguration {
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		
+		httpSecurity.csrf(csrf -> csrf.disable());
+		
 		//CONFIGURED URL'S WHICH NEEDS TO BE PUBLIC AND WHICH NEEDS TO BE PROTECTED
 		httpSecurity.authorizeHttpRequests(authorize -> 
 			
@@ -108,10 +113,11 @@ public class SecurityConfiguration {
 		httpSecurity.formLogin(formLogin -> 
 			formLogin
 			.loginPage("/login")
-			.loginProcessingUrl("/do_login")
+			.loginProcessingUrl("/authenticate")
 			.defaultSuccessUrl("/user/dashboard")
 //			.successForwardUrl("/user/profile")
 //			.failureForwardUrl("/login?error=true")
+			.failureUrl("/login?error=true")
 			.usernameParameter("email")
 			.passwordParameter("password")
 			.permitAll()
@@ -121,6 +127,33 @@ public class SecurityConfiguration {
 			logout.logoutUrl("/logout")
 			.logoutSuccessUrl("/login?logout=true")
 			.permitAll()
+		);
+		
+//		OAuth Configuration:
+/*		
+ * 		1.	Add OAuth2 Client dependency [spring-boot-starter-oauth2-client]
+ * 			Here this application will act as a client and google server will act as a server from which we will be authorizing the users.
+ * 		2.	Get Client Id & Client Secrets from Google Cloud Platform (GCP)
+ * 			Create new project -> Add Name -> Create -> Select Project -> Select APIs & Services from Navigation Menu:
+ * 				i.	OAuth Consent Screen:
+ * 					Select User Type (Internal/External) -> Provide Application Information -> Application Logo -> Application Domain (http://localhost:8080) -> Provide Application Privacy Policy Link & Terms of Service Link if application is running live -> Authorize Domain (Provide if applicatin is live) ->
+ * 					  Provide Developer Contact Information -> Save & Continue -> Provide Scopes -> Save & Continue -> Consent Screen Is Ready.
+ * 				ii.	Credential Screen:
+ * 					Create Credentials -> OAuth Client Id -> Provide Application Type -> Name -> Provide Authorized JavaScript Origins (URI: http://localhost:8080) ->Provide Authorized Redirect URI (URI: http://localhost:8080/login/oauth2/code/google) -> Create
+ * 						Copy Client Id & Client Secret
+ * 		3.	Configure application.properties file with for OAuth (name, id, secret, scope
+ * 		4.	Do OAuth configuration in SecurityConfiguration
+ * 		5.	Login page (/login) and successhandler
+ * 		6.	SuccessHandler will have some data. We can save data based on provider information.
+*/		
+//		FOR OAuth2 DEFAULT PROPERTY
+//		httpSecurity.oauth2Login(Customizer.withDefaults());
+		
+		
+		
+		httpSecurity.oauth2Login(oauth2 ->
+			oauth2.loginPage("/login")
+			.successHandler(oAuthAuthenticationSuccessHandler)
 		);
 		
 		return httpSecurity.build();

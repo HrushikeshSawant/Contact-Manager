@@ -1,4 +1,4 @@
-package com.contactmanager.serviceImplementation;
+package com.contactmanager.service.implementation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

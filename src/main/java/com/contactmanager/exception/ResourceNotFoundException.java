@@ -1,8 +1,6 @@
 package com.contactmanager.exception;
 
 public class ResourceNotFoundException extends RuntimeException{
-
-	private String message;
 	
 	public ResourceNotFoundException() {
 		super("Resource not found");

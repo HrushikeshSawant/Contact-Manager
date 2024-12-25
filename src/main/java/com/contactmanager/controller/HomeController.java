@@ -1,13 +1,17 @@
 package com.contactmanager.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import com.contactmanager.entity.User;
+import com.contactmanager.helper.ApplicationConstants;
 import com.contactmanager.helper.Message;
 import com.contactmanager.helper.UserForm;
 import com.contactmanager.service.UserService;
@@ -19,20 +23,27 @@ import jakarta.validation.Valid;
 public class HomeController {
 	
 	@Autowired
-	UserService userService;
+	private UserService userService;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	
+	@Value("${default.image.url}")
+	String defaultImgUrl;
 
 	@GetMapping("/")
 	public String home(Model model)
 	{
 		model.addAttribute("title", "Free Contact Manager | Contact Manager");
 		model.addAttribute("homeappend", "active");
-		return "home";
+		return "home.html";
 	}
 	
 	@GetMapping("/about")
 	public String about(Model model)
 	{
-		model.addAttribute("title", "About Page");
+		model.addAttribute("title", "About Page | Contact Manager");
+		model.addAttribute("aboutappend", "active");
 		return "about";
 	}
 	
@@ -41,7 +52,7 @@ public class HomeController {
 	{
 		model.addAttribute("title", "Sign Up | Contact Manager");
 		model.addAttribute("signupappend", "active");
-		model.addAttribute("user", new User());
+		model.addAttribute("userForm", userForm);
 		return "signup";
 	}
 	
@@ -71,10 +82,10 @@ public class HomeController {
 			User user = new User();
 			user.setName(userForm.getName());
 			user.setEmail(userForm.getEmail());
-			user.setPassword(userForm.getPassword());
-			user.setProfilePic("/image/default_pic.jpg");
-
 			//BECRYPT PASSWORD ENCODER USED TO ENCRYPT PASSWORD
+			user.setPassword(passwordEncoder.encode(userForm.getPassword()));
+			user.setProfilePic(defaultImgUrl);
+			user.setRoleList(List.of(ApplicationConstants.ROLE_USER));
 			
 			userService.registerUser(user);
 			System.out.println("User saved");
@@ -92,8 +103,10 @@ public class HomeController {
 	}
 	
 	@GetMapping("/login")
-	public String login()
+	public String login(Model model)
 	{
+		model.addAttribute("title", "Login | Contact Manager");
+		model.addAttribute("loginappend", "active");
 		return "login";
 	}
 	
