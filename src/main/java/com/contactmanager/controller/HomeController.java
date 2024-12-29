@@ -29,7 +29,7 @@ public class HomeController {
 	private PasswordEncoder passwordEncoder;
 	
 	@Value("${default.image.url}")
-	String defaultImgUrl;
+	private String defaultImgUrl;
 
 	@GetMapping("/")
 	public String home(Model model)
