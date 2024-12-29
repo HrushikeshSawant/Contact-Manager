@@ -1,0 +1,107 @@
+[33mcommit f47ae463839c4bce53047e05ee95bc8a67c5e33b[m[33m ([m[1;36mHEAD -> [m[1;32mmain[m[33m)[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Thu Dec 26 01:18:14 2024 +0530
+
+    Updated application.properties firle
+
+[33mcommit 004955805adbe1762c7f0444f9a8e0339270f8b1[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Thu Dec 26 01:17:43 2024 +0530
+
+    Updated application.properties firle
+
+[33mcommit 0ce383eca1f1be7e7a6a5a2dd1743635783416a5[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Thu Dec 26 01:16:48 2024 +0530
+
+    Updated application.properties firle
+
+[33mcommit 2593b4a36ac6532db6bd67014f7a44c898d52237[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Thu Dec 26 01:15:28 2024 +0530
+
+    Added code for Spring security and OAuth security
+
+[33mcommit 7059a448ff0e47d3f49b2204d063fb5300668612[m[33m ([m[1;31morigin/main[m[33m)[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sun Aug 4 21:55:48 2024 +0530
+
+    Updated some code
+
+[33mcommit d18686625c921f8c9efc58f16fca452e6f1e0580[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sat Jul 13 18:23:16 2024 +0530
+
+    Created login page
+
+[33mcommit 4d6b8289ad334e8535a2a80ae99f3d36dcda39a7[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sun Jul 7 22:13:47 2024 +0530
+
+    Configured URL routing. Configured which URL's need to public and authorized
+
+[33mcommit ee6caf6ed57bc9ad56dc8fe21d84c9dababc9f56[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sun Jul 7 20:50:16 2024 +0530
+
+    Added code for Spring Security Configuration
+
+[33mcommit 9a8e4a50403009b60136efbbab168f67f84328a0[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sun Jul 7 18:09:39 2024 +0530
+
+    Implemented In-Memory authentication using NoOpPasswordEncoder for testing
+
+[33mcommit 29a0c344264b4e56be239f7b6fb334e55a53c3a7[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sat Jul 6 18:20:11 2024 +0530
+
+    Updated some code created sign in page
+
+[33mcommit 3eb7d52e4b3ce1550317131dafb62047baabdda0[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sat Jun 15 21:38:59 2024 +0530
+
+    Created required entities
+
+[33mcommit 3615952fc327f3640795e9561e0385ffca138ff2[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Tue Jun 11 21:40:34 2024 +0530
+
+    Updated some code
+
+[33mcommit 69051ec973f04c0d0aa290a2184a3e33ae5c6d81[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Thu Mar 28 22:03:26 2024 +0530
+
+    Wrote Service, Repository and other supporing code for registration process
+
+[33mcommit dc18ef88c3d62236d0c686fcf2962a47c2f8c0ff[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Tue Mar 26 21:04:33 2024 +0530
+
+    Created api and HTML page for sign up page
+
+[33mcommit b8541b1fcceb3d2c437b2b3bafad739f8b3744dd[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Tue Mar 12 21:49:45 2024 +0530
+
+    Updated some code
+
+[33mcommit 81a38b54dbea57cc34f5d65e9f59d3a21d8c6c5a[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sun Mar 10 22:36:17 2024 +0530
+
+    Created home and base template
+
+[33mcommit d075741434b5114bdcb796cc0a7cc2ba00d17e0d[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sun Mar 10 21:47:13 2024 +0530
+
+    Database configuration added and 2 entities created
+
+[33mcommit dacf6e4bfc0425558d40df4fa0b6e119bf7e9911[m
+Author: Hrushikesh Sawant <hrushikeshsawant22@gmail.com>
+Date:   Sun Mar 10 17:22:54 2024 +0530
+
+    Initial Commit

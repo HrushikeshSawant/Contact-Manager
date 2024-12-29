@@ -36,7 +36,7 @@ public class HomeController {
 	{
 		model.addAttribute("title", "Free Contact Manager | Contact Manager");
 		model.addAttribute("homeappend", "active");
-		return "home.html";
+		return "home";
 	}
 	
 	@GetMapping("/about")
