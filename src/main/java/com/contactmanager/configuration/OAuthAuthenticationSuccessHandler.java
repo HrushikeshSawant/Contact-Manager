@@ -35,7 +35,7 @@ public class OAuthAuthenticationSuccessHandler implements AuthenticationSuccessH
 		
 		DefaultOAuth2User principal = (DefaultOAuth2User) authentication.getPrincipal();
 //		principal.getAttributes().forEach((key, value) -> log.info(key + " => " + value));
-		log.info(principal.getName());
+//		log.info(principal.getName());
 //		principal.getAuthorities().forEach(System.out::println);
 		
 		User user = new User();
