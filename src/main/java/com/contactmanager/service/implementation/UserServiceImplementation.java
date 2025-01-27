@@ -28,13 +28,13 @@ public class UserServiceImplementation implements UserService {
 	}
 
 	@Override
-	public Optional<User> findUserById(int id) {
-		return userRepository.findById(id);
+	public User findUserById(int id) {
+		return userRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
 	}
 
 	@Override
-	public Optional<User> findUserByEmail(String email) {
-		return userRepository.findByEmail(email);
+	public User findUserByEmail(String email) {
+		return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User not found with email " + email));
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public void deleteUser(int id) {
 		User fetchedUser = userRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found!!"));
+				.orElseThrow(() -> new ResourceNotFoundException("User not found with id " + id));
 		userRepository.delete(fetchedUser);
 	}
 
@@ -82,6 +82,11 @@ public class UserServiceImplementation implements UserService {
 	@Override
 	public List<User> findAllUsers() {
 		return userRepository.findAll();
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		return userRepository.findByEmail(email).orElse(null);
 	}
 
 }

@@ -5,6 +5,18 @@
 	<title>Profile</title>
 </head>
 <body>
-	User Profile
+	User Profile <br /><br />
+	
+	<span data-th-text="${loggedInUserData.name}"></span><br />
+	<span data-th-text="${loggedInUserData.email}"></span><br /><br />
+	
+	<div data-th-if="${loggedInUserData}">
+	
+		<span>User is logged in : <span data-th-text="${loggedInUserData.name}"></span></span><br />
+		<span data-th-text="${loggedInUserData.name}"></span><br />
+		<span data-th-text="${loggedInUserData.email}"></span><br />
+	
+	</div>
+	
 </body>
 </html>

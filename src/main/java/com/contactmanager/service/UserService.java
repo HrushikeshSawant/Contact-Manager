@@ -12,9 +12,9 @@ public interface UserService {
 
 	User registerUser(User user);
 	
-	Optional<User> findUserById(int id);
+	User findUserById(int id);
 	
-	Optional<User> findUserByEmail(String email);
+	User findUserByEmail(String email);
 	
 	Optional<User> updateUser(User user);
 	
@@ -25,5 +25,7 @@ public interface UserService {
 	boolean isUserExistsByEmail(String email);
 	
 	List<User> findAllUsers();
+	
+	User getUserByEmail(String email);
 	
 }
