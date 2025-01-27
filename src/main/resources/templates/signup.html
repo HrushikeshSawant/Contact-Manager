@@ -21,14 +21,14 @@
 					<!-- Name Field -->
 					<div class="mb-3">
 					    <label for="name" class="form-label">Name</label>
-					    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp" placeholder="Enter Name">
+					    <input type="text" class="form-control" id="name" name="name" aria-describedby="nameHelp">
 					    <div id="nameHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('name')}" data-th-text="${e}">We'll never share your email with anyone else.</div>					    
 				  	</div>
 				  	
 				  	<!-- Email Field -->
 					<div class="mb-3">
 					    <label for="email" class="form-label">Email Address</label>
-					    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp" placeholder="Enter Email">
+					    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
 					    <div class="global-message" data-th-if="${session.emailExists != null}" data-th-classappend="${session.emailExists.type}">
 					  		<p data-th-text="${session.emailExists.content}"></p>
 					  		<data-th-block data-th-text="${@sessionHelper.removeVerificationMessageFromSession()}"></data-th-block>
@@ -39,14 +39,14 @@
 				  	<!-- Password Field -->
 				  	<div class="mb-3">
 					    <label for="password" class="form-label">Password</label>
-					    <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
+					    <input type="password" class="form-control" id="password" name="password">
 					    <div id="passwordHelp" class="form-text text-danger px-1" data-th-each="e : ${#fields.errors('password')}" data-th-text="${e}">We'll never share your email with anyone else.</div>
 				  	</div>
 				  	
 				  	<!-- Confirm Password Field -->
 				  	<div class="mb-3">
 					    <label for="confirmPassword" class="form-label">Confirm Password</label>
-					    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password">
+					    <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
 					    <div class="global-message" data-th-if="${session.wrongPassword != null}" data-th-classappend="${session.wrongPassword.type}">
 					  		<p data-th-text="${session.wrongPassword.content}"></p>
 					  		<data-th-block data-th-text="${@sessionHelper.removeVerificationMessageFromSession()}"></data-th-block>
